@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Version: v1.0
+# 每日热点
 # Created by lstcml on 2022/05/08
 # Crontab：8 8 * * *
 
