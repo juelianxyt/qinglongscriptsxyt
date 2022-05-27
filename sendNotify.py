@@ -112,7 +112,6 @@ def message(str_msg):
     sys.stdout.flush()
 
 def bark(title, content):
-    print("\n")
     if BARK:
         try:
             response = requests.get(
@@ -133,15 +132,14 @@ def bark(title, content):
                 print('推送失败！')
         except:
             print('推送失败！')
-    print("bark服务启动")
+    print("bark服务启动！")
     if BARK=='' and BARK_PUSH=='':
-        print("bark服务的bark_token未设置!!\n取消推送")
+        print("bark服务的bark_token未设置！！\n取消推送！")
         return
 
 def serverJ(title, content):
-    print("\n")
     if not SCKEY:
-        print("server酱服务的SCKEY未设置!!\n取消推送")
+        print("server酱服务的SCKEY未设置！！\n取消推送！")
         return
     print("serverJ服务启动")
     data = {
@@ -157,13 +155,12 @@ def serverJ(title, content):
 # tg通知
 def telegram_bot(title, content):
     try:
-        print("\n")
         bot_token = TG_BOT_TOKEN
         user_id = TG_USER_ID
         if not bot_token or not user_id:
-            print("tg服务的bot_token或者user_id未设置!!\n取消推送")
+            print("tg服务的bot_token或者user_id未设置！！\n取消推送！")
             return
-        print("tg服务启动")
+        print("tg服务启动！")
         if TG_API_HOST:
             if 'http' in TG_API_HOST:
                 url = f"{TG_API_HOST}/bot{TG_BOT_TOKEN}/sendMessage"
@@ -210,11 +207,10 @@ def dingding_bot(title, content):
         print('推送失败！')
 
 def coolpush_bot(title, content):
-    print("\n")
     if not QQ_SKEY or not QQ_MODE:
-        print("qq服务的QQ_SKEY或者QQ_MODE未设置!!\n取消推送")
+        print("qq服务的QQ_SKEY或者QQ_MODE未设置！！\n取消推送！")
         return
-    print("qq服务启动")
+    print("qq服务启动！")
     url=f"https://qmsg.zendee.cn/{QQ_MODE}/{QQ_SKEY}"
     payload = {'msg': f"{title}\n\n{content}".encode('utf-8')}
     response = requests.post(url=url, params=payload).json()
@@ -225,11 +221,10 @@ def coolpush_bot(title, content):
 # push推送
 def pushplus_bot(title, content):
     try:
-        print("\n")
         if not PUSH_PLUS_TOKEN:
-            print("PUSHPLUS服务的token未设置!!\n取消推送")
+            print("PUSHPLUS服务的token未设置！！\n取消推送！")
             return
-        print("PUSHPLUS服务启动")
+        print("PUSHPLUS服务启动！")
         url = 'http://www.pushplus.plus/send'
         data = {
             "token": PUSH_PLUS_TOKEN,
@@ -247,11 +242,10 @@ def pushplus_bot(title, content):
         print(e)
 
 def wecom_key(title, content):
-    print("\n")
     if not QYWX_KEY:
-        print("QYWX_KEY未设置!!\n取消推送")
+        print("QYWX_KEY未设置！！\n取消推送！")
         return
-    print("QYWX_KEY服务启动")
+    print("QYWX_KEY服务启动！")
     print("content"+content)
     headers = {'Content-Type': 'application/json'}
     data = { 
@@ -270,11 +264,11 @@ def wecom_key(title, content):
 def wecom_app(title, content):
     try:
         if not QYWX_AM:
-            print("QYWX_AM 并未设置！！\n取消推送")
+            print("QYWX_AM 并未设置！！\n取消推送！")
             return
         QYWX_AM_AY = re.split(',', QYWX_AM)
         if 4 < len(QYWX_AM_AY) > 5:
-            print("QYWX_AM 设置错误！！\n取消推送")
+            print("QYWX_AM 设置错误！！\n取消推送！")
             return
         corpid = QYWX_AM_AY[0]
         corpsecret = QYWX_AM_AY[1]
@@ -366,43 +360,43 @@ def send(title, content):
             if BARK or BARK_PUSH:
                 bark(title=title, content=content)
             else:
-                print('未启用 bark')
+                print('未启用 bark！')
             continue
         if i == 'sc_key':
             if SCKEY:
                 serverJ(title=title, content=content)
             else:
-                print('未启用 Server酱')
+                print('未启用 Server酱！')
             continue
         elif i == 'dingding_bot':
             if DD_BOT_ACCESS_TOKEN and DD_BOT_SECRET:
                 dingding_bot(title=title, content=content)
             else:
-                print('未启用 钉钉机器人')
+                print('未启用 钉钉机器人！')
             continue
         elif i == 'telegram_bot':
             if TG_BOT_TOKEN and TG_USER_ID:
                 telegram_bot(title=title, content=content)
             else:
-                print('未启用 telegram机器人')
+                print('未启用 telegram机器人！')
             continue
         elif i == 'coolpush_bot':
             if QQ_SKEY and QQ_MODE:
                 coolpush_bot(title=title, content=content)
             else:
-                print('未启用 QQ机器人')
+                print('未启用 QQ机器人！')
             continue
         elif i == 'pushplus_bot':
             if PUSH_PLUS_TOKEN:
                 pushplus_bot(title=title, content=content)
             else:
-                print('未启用 PUSHPLUS机器人')
+                print('未启用 PUSHPLUS机器人！')
             continue
         elif i == 'wecom_app':
             if QYWX_AM:
                 wecom_app(title=title, content=content)
             else:
-                print('未启用企业微信应用消息推送')
+                print('未启用企业微信应用消息推送！')
             continue
         elif i == 'wecom_key':
             if QYWX_KEY:
@@ -412,10 +406,10 @@ def send(title, content):
                 
                 
             else:
-                print('未启用企业微信应用消息推送')
+                print('未启用企业微信应用消息推送！')
             continue
         else:
-            print('此类推送方式不存在')
+            print('此类推送方式不存在！')
 
 
 def main():
