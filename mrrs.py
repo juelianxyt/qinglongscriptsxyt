@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 # Version: v1.0
-# 每日热点
 # Created by lstcml on 2022/05/08
 # Crontab：8 8 * * *
 
@@ -10,13 +9,31 @@ import requests
 import datetime
 from bs4 import BeautifulSoup
 
+'''
+v1.1更新记录：
+1、新增脚本自动更新
+'''
+
+# 更新检测
+def checkUpdate():
+    print("当前运行的脚本版本：" + str(version))
+    try:
+        r1 = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/mrrs.py").text
+        r2 = re.findall(re.compile("version = \d.\d"), r1)[0].split("=")[1].strip()
+        if float(r2) > version:
+            print("发现新版本：" + r2)
+            print("正在自动更新脚本...")
+            os.system("ql raw https://gitee.com/lstcml/qinglongscripts/raw/master/mrrs.py &")
+    except:
+        pass
+
+# 获取热点新闻
 def getNew():
     try:
         url = []
         title = []
         _content = ""
         bdurl = "https://top.baidu.com/board?tab=realtime"
-
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Edg/96.0.1054.62'}
 
@@ -37,23 +54,30 @@ def getNew():
     except:
         return ''
 
+# 推送
 def load_send():
     global send
     cur_path = os.path.abspath(os.path.dirname(__file__))
     sys.path.append(cur_path)
-    if os.path.exists(cur_path + "/sendNotify.py"):
-        try:
-            from sendNotify import send
-            return True
-        except:
-            print("加载通知服务失败！")
-            return False
-    else:
+    sendNotifPath = cur_path + "/sendNotify.py"
+    if not os.path.exists(sendNotifPath):
+        print(111)
+        res = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/sendNotify.py")
+        print(res.text)
+        with open(sendNotifPath, "wb") as f:
+            f.write(res.content)
+        
+    try:
+        from sendNotify import send
+        return True
+    except:
         print("加载通知服务失败！")
         return False
 
 
 if __name__ == '__main__':
+    version = 1.0
+    checkUpdate()
     if load_send():
         content = getNew()
         if content != '':
