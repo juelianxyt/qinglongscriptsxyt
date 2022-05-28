@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Version: v1.1
+# Version: v1.2
 # Created by lstcml on 2022/05/27
 
 import os
@@ -12,6 +12,7 @@ import datetime
 v1.1更新记录：
 1、新增脚本自动更新
 2、新增默认按价格升序
+3、修复关键字错误
 '''
 
 # 更新检测
@@ -79,24 +80,24 @@ def load_send():
 
 
 if __name__ == '__main__':
-    version = 1.1
+    version = 1.2
     checkUpdate()
     try:
-        smzm_key = os.environ["smzm_key"]
+        smzdm_key = os.environ["smzdm_key"]
     except:
-        smzm_key = ''
+        smzdm_key = ''
     try:
-        smzm_pages = os.environ['smzm_pages']
+        smzdm_pages = os.environ['smzdm_pages']
     except :
-        smzm_pages = '1'
+        smzdm_pages = '1'
 
-    if smzm_key != '' and smzm_pages != '':
+    if smzdm_key != '' and smzdm_pages != '':
         if load_send():
-            content = getInfo(smzm_key, smzm_pages)
+            content = getInfo(smzdm_key, smzdm_pages)
             if content != '':
-                print('获取“%s”爆料成功！' % smzm_key)
-                send("什么值得买“%s”爆料" % smzm_key, datetime.datetime.now().strftime("%Y.%m.%d %H:%M:%S") + '：\n' + content)
+                print('获取“%s”爆料成功！' % smzdm_key)
+                send("什么值得买“%s”爆料" % smzdm_key, datetime.datetime.now().strftime("%Y.%m.%d %H:%M:%S") + '：\n' + content)
             else:
-                print('获取“%s”爆料失败！' % smzm_key)
+                print('获取“%s”爆料失败！' % smzdm_key)
     else:
-        print('请添加监控关键字变量：smzm_pages！')
+        print('请添加监控关键字变量：smzdm_pages！')
