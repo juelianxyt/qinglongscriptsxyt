@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Version: v1.0
+# Version: v1.1
 # Created by lstcml on 2022/05/08
 # Crontab：8 8 * * *
 
@@ -76,7 +76,7 @@ def load_send():
 
 
 if __name__ == '__main__':
-    version = 1.0
+    version = 1.1
     checkUpdate()
     if load_send():
         content = getNew()
