@@ -33,6 +33,15 @@
 
 定时：*/10 * * * *（建议10分钟）
 
+### getip.py
+
+名称：获取公网IP地址
+
+拉取：ql raw https://gitee.com/lstcml/qinglongscripts/raw/master/getip.py
+
+配置：无
+
+定时：* 8 * * 6（自定义）
 
 ### 链接
 [python-ngrok](https://github.com/hauntek/python-ngrok)
