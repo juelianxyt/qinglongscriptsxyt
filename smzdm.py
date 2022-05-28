@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Version: v1.2
+# Version: v1.3
 # Created by lstcml on 2022/05/27
 
 import os
@@ -16,6 +16,9 @@ v1.1更新记录：
 v1.2更新记录：
 1、修复关键字错误
 2、修复推送失败
+
+v1.3更新记录：
+1、修复推送逻辑
 '''
 
 # 更新检测
@@ -71,19 +74,16 @@ def load_send():
         res = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/sendNotify.py")
         with open(sendNotifPath, "wb") as f:
             f.write(res.content)
-        try:
-            from sendNotify import send
-            return True
-        except:
-            print("加载通知服务失败！")
-            return False
-    else:
+    try:
+        from sendNotify import send
+        return True
+    except:
         print("加载通知服务失败！")
         return False
 
 
 if __name__ == '__main__':
-    version = 1.2
+    version = 1.3
     checkUpdate()
     try:
         smzdm_key = os.environ["smzdm_key"]
