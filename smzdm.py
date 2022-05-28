@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Version: v1.0
-# 什么值得买爆料
+# Version: v1.1
 # Created by lstcml on 2022/05/27
 
 import os
@@ -9,9 +8,29 @@ import sys
 import requests
 import datetime
 
+```
+v1.1更新记录：
+1、新增脚本自动更新
+2、新增默认按价格升序
+```
+
+# 更新检测
+def checkUpdate():
+    print("当前运行的脚本版本：" + str(version))
+    try:
+        r1 = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/smzdm.py").text
+        r2 = re.findall(re.compile("version = \d.\d"), r1)[0].split("=")[1].strip()
+        if float(r2) > version:
+            print("发现新版本：" + r2)
+            print("正在自动更新脚本...")
+            os.system("ql raw https://gitee.com/lstcml/qinglongscripts/raw/master/smzdm.py &")
+    except:
+        pass
+
 # 获取爆料信息
 def getInfo(key, pages):
     try:
+        _dict = {}
         content = ''
         url = 'https://search.smzdm.com/?c=home&s=' + key + '&v=b&p=' + str(pages)
         _headers = {
@@ -31,7 +50,9 @@ def getInfo(key, pages):
             url = keyinfo2['go_path']
             if price != 0:
                 _content = '<a href=%s>%s %s元 %s</a>\n' % (url, buyPlatform, str(price), name)
-            content = content + _content
+                _dict[_content] = price
+        for i in dict(sorted(_dict.items(), key=lambda x: x[1])):
+            content = content + i
         return content
     except:
         return ''
@@ -41,7 +62,11 @@ def load_send():
     global send
     cur_path = os.path.abspath(os.path.dirname(__file__))
     sys.path.append(cur_path)
-    if os.path.exists(cur_path + "/sendNotify.py"):
+    sendNotifPath = cur_path + "/sendNotify.py"
+    if os.path.exists(sendNotifPath):
+        res = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/sendNotify.py")
+        with open(sendNotifPath, "wb") as f:
+            f.write(res.content)
         try:
             from sendNotify import send
             return True
@@ -54,7 +79,8 @@ def load_send():
 
 
 if __name__ == '__main__':
-    
+    version = 1.1
+    checkUpdate()
     try:
         smzm_key = os.environ["smzm_key"]
     except:
