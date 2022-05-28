@@ -62,9 +62,7 @@ def load_send():
     sys.path.append(cur_path)
     sendNotifPath = cur_path + "/sendNotify.py"
     if not os.path.exists(sendNotifPath):
-        print(111)
         res = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/sendNotify.py")
-        print(res.text)
         with open(sendNotifPath, "wb") as f:
             f.write(res.content)
         
