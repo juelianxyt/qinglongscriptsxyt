@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Version: v2.1
+# Version: v2.2
 # Created by lstcml on 2022/04/01
 # 建议定时10分钟：*/10 * * * *
 
@@ -16,10 +16,14 @@ V2.0
 V2.1
 1、新增自定义更新脚本，默认关闭，启用：新建变量qlnwctupdate，值：true
 2、替换更新接口和服务端获取接口
+
+V2.2
+1、替换推送逻辑
 '''
 
 import os
 import re
+import sys
 import json
 import requests
 import random
@@ -90,9 +94,9 @@ def start_nwct():
             print("启动中...")
             sleep(5)
             if process_daemon(qlurl):
-                url = "http://www.pushplus.plus/send?token=" + token + "&title=内网穿透通知" + "&content=青龙面板访问地址：" + qlurl + "&template=html"
-                requests.get(url)
-                print("启动成功！\n青龙面板：%s\npush+发送通知消息完成。" % qlurl)
+                if load_send():
+                     print("启动成功！\n青龙面板：%s" % qlurl)
+                     send("内网穿透通知", "青龙面板访问地址：" + qlurl)
                 break
             else:
                 if i == count-1:
@@ -111,9 +115,27 @@ def get_server():
     except:
         return json.loads('[{"server":"vaiwan.com","port":"443","subdomain":"vaiwan.com"}]')
 
+# 推送
+def load_send():
+    global send
+    cur_path = os.path.abspath(os.path.dirname(__file__))
+    sys.path.append(cur_path)
+    sendNotifPath = cur_path + "/sendNotify.py"
+    if not os.path.exists(sendNotifPath):
+        res = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/sendNotify.py")
+        with open(sendNotifPath, "wb") as f:
+            f.write(res.content)
+        
+    try:
+        from sendNotify import send
+        return True
+    except:
+        print("加载通知服务失败！")
+        return False
+
 if __name__ == '__main__':
     get_server()
-    version = 2.1
+    version = 2.2
     try:
         subdomain = os.environ['qlsubdomain']
     except:
