@@ -75,4 +75,4 @@ if __name__ == '__main__':
             send(datetime.datetime.now().strftime("%Y.%m.%d") + " 设备公网IP地址", content)
     else:
         content = '获取设备公网IP地址失败！'
-    print(content)
+    #print(content)
