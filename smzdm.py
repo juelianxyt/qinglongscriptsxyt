@@ -8,11 +8,11 @@ import sys
 import requests
 import datetime
 
-```
+'''
 v1.1更新记录：
 1、新增脚本自动更新
 2、新增默认按价格升序
-```
+'''
 
 # 更新检测
 def checkUpdate():
