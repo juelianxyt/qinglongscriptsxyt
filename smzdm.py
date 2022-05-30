@@ -103,4 +103,4 @@ if __name__ == '__main__':
             else:
                 print('获取“%s”爆料失败！' % smzdm_key)
     else:
-        print('请添加监控关键字变量：smzdm_pages！')
+        print('请添加监控关键字变量：smzdm_key！')
