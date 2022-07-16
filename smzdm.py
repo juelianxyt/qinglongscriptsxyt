@@ -22,6 +22,7 @@ v1.3更新记录：
 
 V1.4更新记录：
 1、修复获取爆料失败
+2、新增默认获取5页以内的数据
 '''
 
 # 更新检测
@@ -89,19 +90,22 @@ def load_send():
 
 if __name__ == '__main__':
     version = 1.4
+    content = ''
     checkUpdate()
     try:
         smzdm_key = os.environ["smzdm_key"]
     except:
         smzdm_key = ''
     try:
-        smzdm_pages = os.environ['smzdm_pages']
+        smzdm_pages = int(os.environ['smzdm_pages'])
     except :
-        smzdm_pages = '1'
+        # 取3页的数据，建议不大于5，字数超大会导致无法推送
+        smzdm_pages = 5
 
     if smzdm_key != '' and smzdm_pages != '':
         if load_send():
-            content = getInfo(smzdm_key, smzdm_pages)
+            for i in range(0, smzdm_pages):
+                content = content + getInfo(smzdm_key, i)
             if content != '':
                 print('获取“%s”爆料成功！' % smzdm_key)
                 send("什么值得买“%s”爆料" % smzdm_key, datetime.datetime.now().strftime("%Y.%m.%d %H:%M:%S") + '：\n' + content)
