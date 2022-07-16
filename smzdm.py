@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Version: v1.3
+# Version: v1.4
 # Created by lstcml on 2022/05/27
 
 import os
@@ -19,6 +19,9 @@ v1.2更新记录：
 
 v1.3更新记录：
 1、修复推送逻辑
+
+V1.4更新记录：
+1、修复获取爆料失败
 '''
 
 # 更新检测
@@ -49,8 +52,8 @@ def getInfo(key, pages):
             j += 1
             r2 = re.compile(r'<a onclick=\";gtmAddToCart((?:.|\n)*?)</a>').findall(i)
             r3 = re.compile(r'[(](.*?)[)]').findall(r2[0])
-            keyinfo1 = eval(r3[0])
-            keyinfo2 = eval(r3[1].strip("'AddToCart',"))
+            keyinfo1 = eval(r3[0].replace('C\'', ''))
+            keyinfo2 = eval(r3[1].strip("'AddToCart',").replace('C\'', ''))
             price = keyinfo1['metric1']
             name = keyinfo2['article_title']
             buyPlatform = keyinfo2['mall_name']
@@ -60,7 +63,9 @@ def getInfo(key, pages):
                 _dict[_content] = price
         for i in dict(sorted(_dict.items(), key=lambda x: x[1])):
             content = content + i
+        
         return content
+
     except:
         return ''
 
@@ -83,7 +88,7 @@ def load_send():
 
 
 if __name__ == '__main__':
-    version = 1.3
+    version = 1.4
     checkUpdate()
     try:
         smzdm_key = os.environ["smzdm_key"]
