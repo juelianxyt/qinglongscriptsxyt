@@ -14,19 +14,19 @@ from time import sleep
 def update():
     print("当前运行的脚本版本：" + str(version ))
     try:
-        r1 = requests.get("https://gitee.com/lstcml/qinglong_chfs/raw/master/chfs.py").text
+        r1 = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/chfs.py").text
         r2 = re.findall(re.compile("version = \d.\d"),r1)[0].split("=")[1].strip()
         if float(r2) > version:
             print("发现新版本：" + r2)
             print("正在自动更新脚本...")
-            os.system("ql raw https://gitee.com/lstcml/qinglong_chfs/raw/master/chfs.py &")
+            os.system("ql raw https://gitee.com/lstcml/qinglongscripts/raw/master/chfs.py &")
     except:
         pass
 
 def download_chfs():
     if not os.path.exists("/bin/chfs"):
         print("检测到主程序不存在，正在下载主程序...")
-        os.system("git clone https://gitee.com/lstcml/qinglong_chfs.git /tmp/chfs>/dev/null 2>&1 && tar zxf /tmp/chfs/chfs.tar.gz -C /bin && rm -rf /tmp/chfs* && chmod +x /bin/chfs")
+        os.system("git clone https://gitee.com/lstcml/qinglongscripts.git /tmp/chfs>/dev/null 2>&1 && tar zxf /tmp/chfs/chfs.tar.gz -C /bin && rm -rf /tmp/chfs* && chmod +x /bin/chfs")
     start_chfs()
 
 def process_daemon(command):
