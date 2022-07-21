@@ -25,7 +25,7 @@ commond = "python3 " + os.path.join(path, "cpolar.py") + " &"
 def update():
     print("当前运行的脚本版本：" + str(version))
     try:
-        r1 = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/nwct_cpolar.pyy").text
+        r1 = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/nwct_cpolar.py").text
         r2 = re.findall(re.compile("version = \d.\d"), r1)[0].split("=")[1].strip()
         if float(r2) > version:
             print("发现新版本：" + r2)
