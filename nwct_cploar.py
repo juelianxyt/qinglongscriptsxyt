@@ -6,7 +6,7 @@
 '''
 使用说明：
 1、打开https://www.cpolar.com/注册登录后获取authtoken；
-2、新增变量authtoken，值为你账户的authtoken，运行脚本
+2、新增变量qlnwct_authtoken，值为你账户的authtoken，运行脚本
 '''
 
 import os
@@ -38,8 +38,11 @@ def update():
 
 # 下载主程序
 def download_cpolar():
+    if not os.path.exists("cpolar.py"):
+        res = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/cpolar.py")
+        with open("cpolar.py", "wb") as f:
+            f.write(res.content)
     if not os.path.exists("cpolar"):
-        print("正在下载应用程序...")
         res = requests.get("https://static.cpolar.com/downloads/releases/3.2.88.2/cpolar-stable-linux-arm.zip")
         with open("cpolar.zip", "wb") as f:
             f.write(res.content)
