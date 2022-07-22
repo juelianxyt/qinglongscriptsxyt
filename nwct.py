@@ -1,9 +1,12 @@
 # -*- coding: UTF-8 -*-
-# Version: v2.2
+# Version: v2.3
 # Created by lstcml on 2022/04/01
 # 建议定时10分钟：*/10 * * * *
 
 '''
+V2.3
+1、移除钉钉服务器
+
 V2.2
 1、替换推送逻辑
 
@@ -113,7 +116,7 @@ def get_server():
         res = requests.get("https://gitee.com/lstcml/qinglongscripts/raw/master/server.fd").text
         return json.loads(res)
     except:
-        return json.loads('[{"server":"vaiwan.com","port":"443","subdomain":"vaiwan.com"}]')
+        return json.loads('[{"server":"durl.ga","port":"4443","subdomain":"durl.ga"}]')
 
 # 推送
 def load_send():
