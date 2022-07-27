@@ -23,7 +23,7 @@
 
 定时：8 8 * * *（每天一次即可）
 
-### nwct.py（已废弃）
+### nwct.py
 
 名称：青龙外网访问
 
@@ -42,6 +42,16 @@
 配置：无
 
 定时：* 8 * * 6（自定义）
+
+### nwct_cpolar.py
+
+名称：青龙外网访问
+
+拉取：ql raw https://gitee.com/lstcml/qinglongscripts/raw/master/nwct_cpolar.py
+
+配置：使用方法参考脚本注释，变量qlnwct_authtoken为域名前缀，建议首次手动运行一次任务，再查看任务日志
+
+定时：*/10 * * * *（建议10分钟）
 
 ### 链接
 [python-ngrok](https://github.com/hauntek/python-ngrok)
