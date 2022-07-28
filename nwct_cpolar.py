@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Version: v1.0
+# Version: v1.1
 # Created by lstcml on 2022/07/21
 # 建议定时10分钟：*/10 * * * *
 
@@ -7,6 +7,10 @@
 使用说明：
 1、打开https://www.cpolar.com/注册登录后获取authtoken；
 2、新增变量qlnwct_authtoken，值为你账户的authtoken，运行脚本
+
+更新记录：
+V1.1
+1、开放推送，仅支持PushPlus推送，每次触发启动穿透会推送一次地址
 '''
 
 import os
@@ -58,7 +62,6 @@ def get_url():
         for i in re.findall(reg, log_content):
             if 'cpolar' in i:
                 print("获取穿透链接成功...")
-                print(i)
                 return i.replace('\\', '')
                 break
     except:
@@ -91,7 +94,7 @@ def start_nwct():
         if process_daemon():
             if load_send():
                 print("启动内网穿透成功！\n青龙面板：%s" % qlurl)
-            #  send("内网穿透通知", "青龙面板访问地址：" + qlurl)
+                send("内网穿透通知", "青龙面板访问地址：" + qlurl)
         else:
             print("启动内网穿透失败...")
     else:
@@ -118,7 +121,7 @@ def load_send():
 
 
 if __name__ == '__main__':
-    version = 1.0
+    version = 1.1
     try:
         authtoken = os.environ['qlnwct_authtoken']
     except:
