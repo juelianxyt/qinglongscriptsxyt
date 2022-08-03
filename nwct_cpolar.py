@@ -1,11 +1,4 @@
 # -*- coding: UTF-8 -*-
-# Version: v1.1
-# Created by lstcml on 2022/07/21
-# 建议定时10分钟：*/10 * * * *
-
-'''
-使用说明：
-1、打开https://www.cpolar.com/注册登录后获取authtoken；# -*- coding: UTF-8 -*-
 # Version: v1.2
 # Created by lstcml on 2022/07/21
 # 建议定时10分钟：*/10 * * * *
